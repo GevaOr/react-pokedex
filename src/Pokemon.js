@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import TypeList from "./TypeList";
+import React, { useState } from "react";
+import axios from "axios";
 
 const Pokemon = (props) => {
   const formatName = (name) => {
@@ -14,36 +13,24 @@ const Pokemon = (props) => {
   let frontImgSrc = data.sprites.front_default;
   let backImgSrc = data.sprites.back_default;
   let types = data.types;
-  // let typePokeArr = [];
 
   const [name, setName] = useState(formatName(data.name));
   const [imgSrc, setImgSrc] = useState(frontImgSrc);
   const [typesComp, setTypesComp] = useState();
 
-  // const showTypePokeList = (typeObj) => {
-  //   axios
-  //     .get(typeObj.type.url)
-  //     .then((res) => {
-  //       setTypesComp(res.data.pokemon);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   axios
-  //     .get(typeObj.type.url)
-  //     .then((res) => {
-  //       typePokeArr = res.data.pokemon;
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [typesComp]);
+  const getTypePokeList = (typeObj) => {
+    axios
+      .get(typeObj.type.url)
+      .then((res) => {
+        setTypesComp(res.data.pokemon);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div>
+    <>
       <div className="poke-info">
         <h1 className="poke-name title">{name}</h1>
         <img
@@ -63,7 +50,7 @@ const Pokemon = (props) => {
               return (
                 <span
                   key={typeName}
-                  // onClick={() => showTypePokeList(type)}
+                  onClick={() => getTypePokeList(type)}
                   className="type-tag"
                 >
                   {formatName(typeName)}
@@ -72,9 +59,23 @@ const Pokemon = (props) => {
             })}
           </div>
         </div>
+        <div className="type-poke-list">
+          {typesComp &&
+            typesComp.map((pokemon, i) => {
+              let pokeName = pokemon.pokemon.name;
+              return (
+                <div
+                  className="poke-list-name"
+                  onClick={() => props.changeInput(pokeName)}
+                  key={i}
+                >
+                  {formatName(pokeName)}
+                </div>
+              );
+            })}
+        </div>
       </div>
-      {/* <TypeList pokeArr={typePokeArr} /> */}
-    </div>
+    </>
   );
 };
 

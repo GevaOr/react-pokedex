@@ -10,7 +10,8 @@ function App() {
 
   const searchPoke = (event) => {
     event.preventDefault();
-    let pokeName = event.target.elements.query.value.toLowerCase();
+    let value = event.target.elements.query.value;
+    let pokeName = value.toLowerCase();
     setInput(pokeName);
   };
 
@@ -23,23 +24,11 @@ function App() {
         })
         .catch((error) => {
           console.log(error);
+          setPokemonData("error");
         });
     }
-    setPokemonData();
+    setPokemonData(null);
   }, [input]);
-
-  // useEffect(() => {
-  //   if (pokemonData) {
-  //     axios
-  //       .get(pokemonData.)
-  //       .then((res) => {
-  //         setPokemonData(res.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [pokemonData]);
 
   return (
     <main>
@@ -54,7 +43,11 @@ function App() {
           Search
         </button>
       </form>
-      {pokemonData ? <Pokemon data={pokemonData} /> : <NoPoke input={input} />}
+      {pokemonData && pokemonData !== "error" ? (
+        <Pokemon changeInput={setInput} data={pokemonData} />
+      ) : (
+        <NoPoke input={input} data={pokemonData} />
+      )}
     </main>
   );
 }

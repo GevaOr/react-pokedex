@@ -3,17 +3,22 @@ html {
   height: 100%;
   background: rgb(253, 29, 29);
   background: linear-gradient(
-    0deg,
-    rgba(253, 29, 29, 0.46820726581648286) 0%,
-    rgba(247, 139, 29, 0.529832001159839) 34%,
-    rgba(217, 228, 31, 0.5466387238489145) 100%
-  );
+      0deg,
+      rgba(253, 29, 29, 0.46820726581648286) 0%,
+      rgba(247, 139, 29, 0.529832001159839) 34%,
+      rgba(217, 228, 31, 0.5466387238489145) 100%
+    )
+    fixed no-repeat;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+div {
+  max-width: 100%;
 }
 
 main {
@@ -97,9 +102,29 @@ main {
   padding: 5px;
   border-radius: 10px;
   text-shadow: -1px 1px 20px white;
-  background-color: rgba(190, 190, 190, 0.5);
+  background-color: rgba(190, 190, 190, 0.4);
 }
 
-.pokeList {
-  list-style: none;
+.type-tag:hover {
+  cursor: pointer;
+  background-color: rgba(190, 190, 190, 0.6);
+}
+
+.type-poke-list {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+}
+
+.poke-list-name {
+  cursor: pointer;
+  padding: 3px;
+  margin: 1px;
+}
+
+.poke-list-name:hover {
+  margin: 0;
+  border: 1px solid black;
+  border-radius: 5px;
 }
